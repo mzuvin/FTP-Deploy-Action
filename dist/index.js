@@ -2246,6 +2246,7 @@ function deploy(deployArgs) {
             throw error;
         }
         finally {
+        	client.rename("_web.config","web.config")
             client.close();
             timings.stop("total");
         }
@@ -2260,7 +2261,6 @@ function deploy(deployArgs) {
         logger.all(`----------------------------------------------------------------`);
         logger.all(`Total time:                       ${timings.getTimeFormatted("total")}`);
         logger.all(`----------------------------------------------------------------`);
-        client.rename("_web.config","web.config")
     });
 }
 exports.deploy = deploy;
