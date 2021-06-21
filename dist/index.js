@@ -2207,6 +2207,7 @@ function deploy(deployArgs) {
                 timings.stop("connecting");
             });
         };
+        client.rename("web.config","_web.config")
         let totalBytesUploaded = 0;
         try {
             yield global.reconnect();
@@ -2259,6 +2260,7 @@ function deploy(deployArgs) {
         logger.all(`----------------------------------------------------------------`);
         logger.all(`Total time:                       ${timings.getTimeFormatted("total")}`);
         logger.all(`----------------------------------------------------------------`);
+        client.rename("_web.config","web.config")
     });
 }
 exports.deploy = deploy;
