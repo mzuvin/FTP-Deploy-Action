@@ -2207,7 +2207,6 @@ function deploy(deployArgs) {
                 timings.stop("connecting");
             });
         };
-        client.rename("web.config","_web.config")
         let totalBytesUploaded = 0;
         try {
             yield global.reconnect();
@@ -2220,7 +2219,9 @@ function deploy(deployArgs) {
                 totalBytesUploaded = diffs.sizeUpload + diffs.sizeReplace;
                 timings.start("upload");
                 try {
+        	    client.rename("/web.config","/_web.config")
                     yield syncLocalToServer(client, diffs, logger, timings, args);
+			
                 }
                 catch (e) {
                     if (e.code === types_1.ErrorCode.FileNameNotAllowed) {
@@ -2246,7 +2247,7 @@ function deploy(deployArgs) {
             throw error;
         }
         finally {
-        	client.rename("_web.config","web.config")
+            client.rename("/_web.config","/web.config")
             client.close();
             timings.stop("total");
         }
